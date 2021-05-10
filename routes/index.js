@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {  //get() method has 2 parameters. Fir
   res.render('index', { title: 'Express' }); //will search index file in views folder and there provides value "Express" for the key 'title'. Also, we can either use res.render() or res.send().
 });
 
-router.post('/user-registration', authentication.userRegistration);
-router.post('/user-login', authentication.userLogin);
+router.post('/user-registration', authentication.userRegistration); //if url has localhost:3000/user-registration then will invoke authentication.userRegistration() method
+router.post('/user-login', authentication.userLogin);               //if url has localhost:3000/user-registration then will invoke callback authentication.userRegistration()
 
 module.exports = router;
