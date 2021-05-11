@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path'); //path module is imported and stored in 'path' variable
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var expressLayouts=require('express-ejs-layouts');
 
 var indexRouter = require('./routes/index'); //imports ./routes/index module here, in app.js
 var usersRouter = require('./routes/users'); //imports ./routes/users module here, in app.js
@@ -11,7 +12,9 @@ var app = express(); //an object of express is created 'app'
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));  //
-app.set('view engine', 'ejs');                    //sets files in ./views to ejs files
+app.set('view engine', 'ejs'); 
+
+app.use(expressLayouts);//sets files in ./views to ejs files
 
 app.use(logger('dev'));
 app.use(express.json());
