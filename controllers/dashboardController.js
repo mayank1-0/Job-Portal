@@ -1,8 +1,8 @@
 const getDashboard = async(req, res) => {
     try {
-      const userType = req.param('userType');
+      const userType = req.param('userType'); //userType variable will take userType from param 'userType' inside url in index.ejs line 220.
       console.log(userType);
-      if(userType === 'admin') {
+      if(userType === 'admin') {  //
         res.render('dashboard/adminDashboard', {title: 'Dashboard - Admin', path: 'Dashboard', subpath: 'Admin'});  //will render views/dashboard/adminDashboard.js and pass dynamic values i.e values in second argument
       } else {
         res.render('dashboard/adminDashboard', {title: 'Dashboard - Admin', layout: 'layout.ejs'}); //will render adminDashboard.ejs for which the layout file will be layout.ejs(It contains html tags)

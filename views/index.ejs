@@ -166,7 +166,7 @@
               <a href="#" class="text-light"><small>Forgot password?</small></a>
             </div>
             <div class="col-6 text-right">
-              <a href="#" class="text-light"><small>Create new account</small></a>
+              <a href="/register" class="text-light"><small>Create new account</small></a>
             </div>
           </div>
         </div>
@@ -215,9 +215,9 @@
       dataType: 'JSON',
       data: data,
       success: function success(result) {
-        // console.log(result, result.userType);
+        console.log(result, result.userType);
         window.localStorage.setItem('token', result.token);
-        window.location.href = '/users/dashboard?userType=' + result.userType;
+        window.location.href = '/users/dashboard?userType=' + result.userType;  //returns in url whatever is the account type i.e admin or user ??????????????????????????
       },
       error: function error(error) {
         console.log(error);
