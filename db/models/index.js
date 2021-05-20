@@ -1,5 +1,5 @@
 const dbConfig = require('../../config/db.config');
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize'); //Sequelize is the framework/module. It is an ORM(Object-Relational-Mapping)
 
 const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, {
   host: dbConfig.host,
@@ -13,5 +13,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.Users = require('../models/Users.model')(sequelize, Sequelize);
+db.Applicants = require('../models/Applicants.model')(sequelize, Sequelize);
+db.Timeline = require('../models/Timeline.model')(sequelize, Sequelize);
 
 module.exports = db;

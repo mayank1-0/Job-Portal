@@ -209,20 +209,20 @@
       email: $("#email").val(),
       password: $("#password").val(),
     }
-    $.ajax({
+    $.ajax({                      //will initiate a post request to specified url and fetch result from that
       type: "POST",
-      url: "/user-login",
+      url: "/user-login",         //loads and executes the javaScript file associated with this route.
       dataType: 'JSON',
       data: data,
-      success: function success(result) {
-        console.log(result, result.userType);
+      success: function success(result) {   // result here is attributes data in userLogin() in authenticationController.js
+        //console.log(result);
         window.localStorage.setItem('token', result.token);
-        window.location.href = '/users/dashboard?userType=' + result.userType;  //returns in url whatever is the account type i.e admin or user ??????????????????????????
+        window.location.href = '/users/dashboard';  //returns in url whatever is the account type i.e admin or user ??????????????????????????
       },
-      error: function error(error) {
+      error: function error(error) {        //error ????????????????????????????
         console.log(error);
         // $('.custom-container').noty({text: error.responseText.message});
-        errorNotification(error.responseJSON.message);
+        errorNotification(error.responseJSON.message);        //errorNotification() comes from /public/javascripts/notyNotifications.js
       }
     })
   }

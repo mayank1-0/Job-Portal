@@ -48,10 +48,10 @@ module.exports = (sequelize, Sequelize) => {
   },
     {
       hooks: {
-        beforeCreate(user, options) {
+        beforeCreate(user, options) {                       //function called before creating a table.
           // console.log(user.toJSON().password);
           if(user.toJSON().password) {
-            return bcrypt.hash(user.toJSON().password, 10)
+            return bcrypt.hash(user.toJSON().password, 10)  //converts password into hash or salt.
             .then(hash => {
               // console.log(hash);
               // user.toJSON().password = hash;
@@ -63,7 +63,7 @@ module.exports = (sequelize, Sequelize) => {
             });
           }
         },
-        beforeUpdate(user, options) {
+        beforeUpdate(user, options) {                       //function called before updating a table.
           // console.log(user.toJSON().password);
           if(user.toJSON().password) {
             return bcrypt.hash(user.toJSON().password, 10)

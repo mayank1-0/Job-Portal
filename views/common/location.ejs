@@ -4,8 +4,8 @@
       <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
         <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
           <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-          <li class="breadcrumb-item"><a href="#"><%- (typeof path != "undefined" ? path : "Dashboard") %></a></li>
-          <li class="breadcrumb-item active" aria-current="page"><%- (typeof subpath != "undefined" ? subpath : "") %></li>
+          <li class="breadcrumb-item"><a href="#"><%- (typeof sessionData.path != "undefined" ? sessionData.path : "Dashboard") %></a></li>
+          <li class="breadcrumb-item active" aria-current="page"><%- (typeof sessionData.subpath != "undefined" ? sessionData.subpath : "") %></li>
         </ol>
       </nav>
     </div>

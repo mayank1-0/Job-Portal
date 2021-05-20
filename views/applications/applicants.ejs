@@ -26,12 +26,14 @@
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
-                  <tbody class="list">
+                  <tbody id="tr" class="list">
                     <tr>
                       <th scope="row">
                         <div class="media align-items-center">
                           <div class="media-body">
+                            <a href="/applications/applicants/profile/:profileid">
                             <span class="name mb-0 text-sm">Rajesh Mishra</span>
+                            </a>
                           </div>
                         </div>
                       </th>
@@ -113,3 +115,63 @@
     </div>
   </div>
 </div>
+
+
+<script>
+  var token = '';
+  $(() => {
+    token = window.localStorage.getItem('token');
+    // console.log(token);
+    fetchApplicants();
+  });
+  function fetchApplicants() {
+    $.ajax({
+      type: "GET",
+      url: "/applications/api/v1/get-applicants",
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + token);
+      },
+      success: function success(result) {
+        console.log(result);
+        result = result.data;
+        var tr = '';
+        result.map((i) => {
+          let appliedSince = moment(i.appliedOn).fromNow();
+          let actionBtns = '';
+          if (i.statusCode == 0 || i.statusCode == 1 || i.statusCode == 2 || i.statusCode == 3) {
+            actionBtns = '<td class="text-right"><div class="dropdown"> <a class="btn btn-sm btn-success" href="#" onclick="select(\'' + i.applicantID + '\')" role="button"> <i class="fas fa-vote-yea"></i> Select </a> <a class="btn btn-sm btn-danger" href="#" onclick="reject(\'' + i.applicantID + '\')" role="button"> <i class="fas fa-minus-circle"></i> Reject </a></div></td>';
+          } else if (i.statusCode == 4) {
+            actionBtns = '<td class="text-right"><span class="badge-md badge-pill badge-success">' + i.status + '</span></td>';
+          } else if (i.statusCode == 5) {
+            actionBtns = '<td class="text-right"><span class="badge-md badge-pill badge-danger">' + i.status + '</span></td>';
+          }
+          tr += '<tr><th scope="row"><div class="media align-items-center"><div class="media-body"> <a href="/applications/applicants/profile/' + i.applicantID + '"> <span class="name mb-0 text-sm">' + i.candidate + '</span> </a></div></div></th><td class="budget"> ' + i.type + '</td><td><b class="status">' + i.status + '</b> </span></td><td><div class="d-flex align-items-center"> <span class="completion mr-2">' + i.appliedFor + '</span></div></td><td><div class="d-flex align-items-center"> <span class="completion mr-2">' + moment(i.appliedOn).format('DD/MM/YYYY') + ' (' + appliedSince + ')' + '</span></div></td>' + actionBtns + '</tr>';
+        });
+        $("#tr").html(tr);    //.html() is like .innerHTML  
+      },
+      error: function error(error) {
+        console.log(error, 'error');
+        // $('.custom-container').noty({text: error.responseText.message});
+        errorNotification(error.responseJSON.message);
+      }
+    })
+  }
+
+  function reject(applicationId) {
+    // alert(applicationId);
+    var data = {
+      statusCode: 5,
+      status: 'Rejected'
+    };
+    confirmAlertWithReason('/applications/api/v1/confirm-reject-candidate/' + applicationId, token, data);
+  }
+
+  function select(applicationId) {
+    // alert(applicationId);
+    var data = {
+      statusCode: 4,
+      status: 'Selected'
+    };
+    confirmAlertWithReason('/applications/api/v1/confirm-reject-candidate/' + applicationId, token, data);
+  }
+</script>

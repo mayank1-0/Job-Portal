@@ -57,31 +57,32 @@ const userLogin = async(req, res) => {        // async makes a function return a
     // }
 
     // console.log(req.body.email);
-    let userData = await User.findOne({ //findOne finds from database whether email inside database matches entered email(line 60 & 61).
+    let userData = await User.findOne({ //findOne finds from database whether email inside database matches entered email(line 62 & 63). And also, await expression causes async function execution to pause until a Promise is settled (that is, fulfilled or rejected), and to resume execution of the async function after fulfillment. When resumed, the value of the await expression is that of the fulfilled Promise
       plain: true, //ignores any extra information returned by Sequelize ORM
       where: {
         email: req.body.email //email inside database matches entered email.
       },
       attributes: ['id', 'name', 'accType', 'userID', ['password', 'hashedPass']] //we have metioned here attributes because we want only these specific attribute's values from database. ????????????????
     });
-    if (!userData) {  //if email not present i.e false
+    if (!userData) {  //if email didn't matched thus no data goes in userData i.e empty/false
       res.status(401).send({ message: 'User not found. Please try again' });
     } else {
-      userData = userData.toJSON(); //.toJSON returns only the data i.e attributes line 63
+      userData = userData.toJSON(); //.toJSON returns only the data i.e attributes line 65
       console.log(userData);
       // console.log(req.body.password, userData.hashedPass)
-      const match = await bcrypt.compare(req.body.password, userData.hashedPass); //here req.body.password is first encrypted and then it is compared with the hash/salt password stored in database.
+      const match = await bcrypt.compare(req.body.password, userData.hashedPass); //here req.body.password that is coming from form is first encrypted and then it is compared with the hash/salt password stored in database(userData variable).
       // console.log(match);
       if (!match) {
         res.status(401).send({ message: 'Invalid Password. Please try again' });  //if dosen't match sends response.
       } else {
+        //console.log("awdawdawdawd" + req.session);
         const token = jwt.sign({ userId: userData.userID, isActive: true, userType: userData.accType }, config.jwtSecret, { expiresIn: '24h' });  //if matches then creates a jwt token.
-        // let sessionData = req.session;
-        // sessionData.user = {};
-        // sessionData.token = token;
-        // sessionData.user.name = userData.name;
-        // sessionData.user.email = userData.email;
-        // sessionData.user.userType = userData.accType;
+        let sessionData = req.session;    // from where does req.session takes data ???????????????????? 
+        sessionData.user = {};
+        sessionData.token = token;
+        sessionData.user.name = userData.name;
+        sessionData.user.email = userData.email;
+        sessionData.user.userType = userData.accType;
          res.status(200).send({ token: token, userType: userData.accType, message: 'Login Successfull' });  //response is sent
       }
     }
@@ -92,7 +93,20 @@ const userLogin = async(req, res) => {        // async makes a function return a
   }
 };
 
+const userLogout = async (req, res) => {
+  try {
+    let sessionData = req.session;
+    const logout = await sessionData.destroy();
+    // console.log(logout);
+    res.redirect('/');
+  } catch (e) {
+    console.log(e);
+    res.status(500).send({ error: e, message: 'Logout Failed. Please try again' });
+  }
+}
+
 module.exports = {
   userRegistration,
-  userLogin  
+  userLogin,
+  userLogout 
 };
