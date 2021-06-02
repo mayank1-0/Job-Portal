@@ -1,0 +1,114 @@
+<%- include('./../common/navbar')%>
+  <div class="main-content" id="panel">
+    <%- include('./../common/header')%>
+      <div class="header bg-primary pb-6">
+        <div class="container-fluid">
+          <div class="header-body">
+            <%- include('./../common/location') %>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid mt--6">
+        <!-- Page content -->
+        <div class="row">
+          <div class="col">
+            <div class="card">
+              <!-- Card header -->
+              <div class="card-header border-0">
+                <h3 class="mb-0">Job Openings</h3>
+              </div>
+              <!-- Light table -->
+              <div class="table-responsive">
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col" class="sort" data-sort="name">Opening</th>
+                      <th scope="col" class="sort" data-sort="budget">Department</th>
+                      <th scope="col" class="sort" data-sort="status">Location</th>
+                      <th scope="col" class="sort" data-sort="completion">Posted On</th>
+                      <th scope="col">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tr" class="list">
+
+                  </tbody>
+                </table>
+              </div>
+              <!-- Card footer -->
+              <div class="card-footer py-4">
+                <nav aria-label="...">
+                  <ul class="pagination justify-content-end mb-0">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1">
+                        <i class="fas fa-angle-left"></i>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+                    <li class="page-item active">
+                      <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">
+                        <i class="fas fa-angle-right"></i>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <script>
+    var token = '';
+    $(() => {   //document.getElementById(()=>token = window.localStorage.getItem('token'); console.log(token); fetchJobOpenings();)
+      token = window.localStorage.getItem('token');
+      // console.log(token);
+      fetchJobOpenings();
+    });
+    function fetchJobOpenings() {
+      $.ajax({
+        type: "GET",
+        url: "/openings/api/v1/get-openings",
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader("Authorization", "Bearer " + token);
+        },
+        success: function success(result) {
+          console.log(result);
+          result = result.data;
+          var tr = '';
+          result.map((i) => {
+            let appliedSince = moment(i.updatedAt).fromNow();
+            let status = '';
+            if (i.status == "ACTIVE") {
+              status = '<button class="btn btn-success btn-sm" onclick="activeInactive(0, \''+i.id+'\')">' + i.status + '</button>';
+            } else if (i.status == "INACTIVE") {
+              status = '<button class="btn btn-danger btn-sm" onclick="activeInactive(1, \''+i.id+'\')">' + i.status + '</button>';
+            }
+            tr += '<tr><th scope="row"><div class="media align-items-center"><div class="media-body"> <a href="/openings/profile/' + i.id + '"> <span class="name mb-0 text-sm">' + i.openingName + '</span> </a></div></div></th><td class="budget"> ' + i.department + '</td><td><b class="status">' + i.location + '</b> </span></td><td><div class="d-flex align-items-center"> <span class="completion mr-2">' + moment(i.updatedAt).format('DD/MM/YYYY') + ' (' + appliedSince + ')' + '</span></div></td><td><div class="d-flex align-items-center">'+ status +'</div></td></tr>';
+          });
+          $("#tr").html(tr);
+        },
+        error: function error(error) {
+          console.log(error, 'error');
+          // $('.custom-container').noty({text: error.responseText.message});
+          errorNotification(error.responseJSON.message);
+        }
+      })
+    }
+
+    function activeInactive(status, openingId) {
+      // alert(openingId);
+      var data = {
+        status: status
+      };
+      confirmAction('/api/v1/update-opening-status/' + openingId, token, data);
+    }
+  </script>

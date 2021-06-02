@@ -21,13 +21,13 @@
                       <th scope="col" class="sort" data-sort="name">Candidate</th>
                       <th scope="col" class="sort" data-sort="budget">Type</th>
                       <th scope="col" class="sort" data-sort="status">Status</th>
-                      <th scope="col">Interviewer</th>
-                      <th scope="col" class="sort" data-sort="completion">Applied For</th>
+                      <th scope="col">Applied For</th>
+                      <th scope="col" class="sort" data-sort="completion">Applied On</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody id="tr" class="list">
-                    <tr>
+                    <!-- <tr>
                       <th scope="row">
                         <div class="media align-items-center">
                           <div class="media-body">
@@ -44,7 +44,7 @@
                         <span class="badge badge-dot mr-4">
                           <i class="bg-primary"></i>
                           <span class="status">Applied</span>
-                          <!-- Applied | Round 1 | Round 2 | Round 3 | Selected/Rejected -->
+                          Applied | Round 1 | Round 2 | Round 3 | Selected/Rejected 
                         </span>
                       </td>
                       <td>
@@ -78,7 +78,7 @@
                           </a>
                         </div>
                       </td>
-                    </tr>
+                    </tr> -->
                   </tbody>
                 </table>
               </div>
@@ -158,7 +158,7 @@
   }
 
   function reject(applicationId) {
-    // alert(applicationId);
+    //alert(applicationId);
     var data = {
       statusCode: 5,
       status: 'Rejected'
@@ -167,7 +167,7 @@
   }
 
   function select(applicationId) {
-    // alert(applicationId);
+    //alert(applicationId);
     var data = {
       statusCode: 4,
       status: 'Selected'

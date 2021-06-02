@@ -14,7 +14,7 @@
                 <div class="row">
                   <div class="col">
                     <h5 class="card-title text-uppercase text-muted mb-0">Total applicants</h5>
-                    <span class="h2 font-weight-bold mb-0">350,897</span>
+                    <span class="h2 font-weight-bold mb-0" id="totalapplicantsnumber">350,897</span>
                   </div>
                   <div class="col-auto">
                     <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -26,6 +26,10 @@
                   <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
                   <span class="text-nowrap">Since last month</span>
                 </p>
+                <br>
+                <div id="totalapplicants">
+
+                </div>
               </div>
             </div>
           </div>
@@ -100,3 +104,39 @@
     </div>
   </div>
 </div>
+<script>
+  var token = '';
+  $(() => {
+    token = window.localStorage.getItem('token');
+    // console.log(token);
+    fetchApplicants();
+  });
+  function fetchApplicants() {
+    $.ajax({
+      type: "GET",
+      url: "/applications/api/v1/get-applicants",
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + token);
+      },
+      success: function success(result) {
+        console.log(result);
+        result = result.data;
+        var tr = '';
+        var j=0;
+        result.map((i) => {
+          let appliedSince = moment(i.appliedOn).fromNow();
+         
+          tr += '<tr><th scope="row"><div class="media align-items-center"><div class="media-body"> <a href="/applications/applicants/profile/' + i.applicantID + '"> <span class="name mb-0 text-sm">' + i.candidate + '</span> </a></div></div></th><td class="budget"> ' + '</td><td><b class="status">' + '</b> </span></td><td><div class="d-flex align-items-center"> <span class="completion mr-2">' + '</span></div></td><td><div class="d-flex align-items-center"> <span class="completion mr-2">' + '</span></div></td>' + '</tr>';
+          j+=1;
+        });
+        $("#totalapplicants").html(tr);    //.html() is like .innerHTML
+        $("#totalapplicantsnumber").html(j);
+      },
+      error: function error(error) {
+        console.log(error, 'error');
+        // $('.custom-container').noty({text: error.responseText.message});
+        errorNotification(error.responseJSON.message);
+      }
+    })
+  }
+</script>

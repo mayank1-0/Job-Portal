@@ -47,7 +47,7 @@ module.exports = (sequelize, Sequelize) => {
     }
   },
     {
-      hooks: {
+      hooks: {                                         //any operation we do before a function
         beforeCreate(user, options) {                       //function called before creating a table.
           // console.log(user.toJSON().password);
           if(user.toJSON().password) {

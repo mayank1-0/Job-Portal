@@ -10,7 +10,8 @@ var indexRouter = require('./routes/index'); //imports ./routes/index module her
 var usersRouter = require('./routes/users'); //imports ./routes/users module here, in app.js
 var dashboardRouter = require('./routes/dashboard'); //imports ./routes/users module here, in app.js
 var applicationRouter = require('./routes/applications');
-//var openingRoute = require('./routes/openings');
+var openingRoute = require('./routes/openings');
+var publicURLRouter = require('./routes/publicURL');
 
 const db = require('./db/models/index');
 
@@ -40,12 +41,13 @@ app.use('/', indexRouter);      //means whenever we write localhost:3000/ in bro
 app.use('/users', usersRouter); //means whenever we write localhost:3000/users in browser, usersRouter is run
 app.use('/users', dashboardRouter); //means whenever we write localhost:3000/users/dashboard in browser, dashboardRouter is run
 app.use('/applications', applicationRouter);
-//app.use('/openings', openingRoute);
+app.use('/openings', openingRoute);
+app.use('/join-us', publicURLRouter);
 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));       //whenever a route, etc fails an 404 error will be creatd and error.ejs will be rendered. 
+  next(createError(404));       //whenever a route, etc fails an 404 error will be created and error.ejs will be rendered. 
 });
 
 db.sequelize.sync({});

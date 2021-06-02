@@ -60,7 +60,7 @@ const getApplicantProfile = async(req, res) => {
     applicantData.category = (applicantData.isFresher === false ? 'Experienced' : 'Fresher');
     applicantData.experience = Math.floor(applicantData.experience/12) || 0;
     applicantData.appliedOn = moment(applicantData.createdAt).format('DD/MM/YYYY hh:mm:ss A');
-    // console.log(applicantData);
+    console.log(applicantData);
     // console.log(applicantData.isFresher === false ? 'Experienced' : 'Fresher');
     res.status(200).send({status: 200, data: applicantData, message: 'Applicant Data Fetched'});
   } catch(e) {
@@ -68,6 +68,28 @@ const getApplicantProfile = async(req, res) => {
     res.status(500).send({status: 500, data: e, message: 'API Error'});
   }
 };
+
+// const getApplicantProfile1 = async(req, res) => {
+//   try {
+//     const openingname = req.params.opening;
+//     let openingData = await Applicants.findAll({
+//       plain: true, //ignores any extra information returned by Sequelize ORM
+//       where: {
+//         appliedFor: openingname,
+//       }
+//     });
+//     openingData = openingData.toJSON();
+//     openingData.category = (openingData.isFresher === false ? 'Experienced' : 'Fresher');
+//     openingData.experience = Math.floor(openingData.experience/12) || 0;
+//     openingData.appliedOn = moment(openingData.createdAt).format('DD/MM/YYYY hh:mm:ss A');
+//     console.log(openingData);
+//     // console.log(applicantData.isFresher === false ? 'Experienced' : 'Fresher');
+//     res.status(200).send({status: 200, data: openingData, message: 'Opening Data Fetched'});
+//   } catch(e) {
+//     console.log(e);
+//     res.status(500).send({status: 500, data: e, message: 'API Error'});
+//   }
+// };
 
 const getTimeline = async(req, res) => {
   try {
