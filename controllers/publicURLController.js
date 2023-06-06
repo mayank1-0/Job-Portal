@@ -1,6 +1,6 @@
 const db = require("../db/models");
-const Openings = db.Openings;                           //???????????????????????????????????????????????????????? what does this line do ?
-const Applicants = db.Applicants;        //???????????????????????????????????????????????????????? what does this line do ?
+const Openings = db.Openings; //???????????????????????????????????????????????????????? what does this line do ?
+const Applicants = db.Applicants; //???????????????????????????????????????????????????????? what does this line do ?
 //const sequelize = require("sequelize");
 //const { Sequelize } = require("sequelize");
 //const cases = require("change-case");
@@ -25,100 +25,117 @@ const Applicants = db.Applicants;        //?????????????????????????????????????
 //     }
 //   };
 
-const publicURLopeningDetails  = async(req, res) => {
+const publicURLopeningDetails = async (req, res) => {
+  const profileId = req.params.openingid;
+  try {
+    res.render("publicURL", {
+      title: "Openings - Jobs",
+      profileId,
+    });
+  } catch (e) {
+    res.render("publicURL", {
+      title: "Openings - Jobs",
+      profileId,
+    });
+  }
+};
+
+const publicURLgetOpeningProfile = async (req, res) => {
+  try {
     const profileId = req.params.openingid;
-    try {
-        res.render('publicURL', {
-        title: 'Openings - Jobs',
-        profileId
-        });
-    }
-    catch(e){
-        res.render('publicURL', {
-            title: 'Openings - Jobs',
-            profileId
-            });
-    }
-};
-
-const publicURLgetOpeningProfile = async(req, res) => {
-    try {
-      const profileId = req.params.openingid;
-      let openingData = await Openings.findOne({
-        plain: true, //ignores any extra information returned by Sequelize ORM
-        where: {
-          id: profileId,
-        }
+    let openingData = await Openings.findOne({
+      plain: true, //ignores any extra information returned by Sequelize ORM
+      where: {
+        id: profileId,
+      },
+    });
+    openingData = openingData.toJSON();
+    // openingData.category = (applicantData.isFresher === false ? 'Experienced' : 'Fresher');
+    // openingData.experience = Math.floor(applicantData.experience/12) || 0;
+    // openingData.appliedOn = moment(applicantData.createdAt).format('DD/MM/YYYY hh:mm:ss A');
+    console.log(openingData);
+    // console.log(applicantData.isFresher === false ? 'Experienced' : 'Fresher');
+    res
+      .status(200)
+      .send({
+        status: 200,
+        data: openingData,
+        message: "Opening Data Fetched",
       });
-      openingData = openingData.toJSON();
-      // openingData.category = (applicantData.isFresher === false ? 'Experienced' : 'Fresher');
-      // openingData.experience = Math.floor(applicantData.experience/12) || 0;
-      // openingData.appliedOn = moment(applicantData.createdAt).format('DD/MM/YYYY hh:mm:ss A');
-      console.log(openingData);
-      // console.log(applicantData.isFresher === false ? 'Experienced' : 'Fresher');
-      res.status(200).send({status: 200, data: openingData, message: 'Opening Data Fetched'});
-    } catch(e) {
-      console.log(e);
-      res.status(500).send({status: 500, data: e, message: 'API Error'});
-    }
-  };
-
-  const jobsapply  = async(req, res) => {
-    //var applicationId = req.params.number;
-    //const profileId = req.params.openingid;
-    try {
-        res.render('candidates', {
-        //title: 'Apply - Jobs',
-        //applicationId
-        });
-    }
-    catch(e){
-        res.render('publicURL', {
-            //title: 'Openings - Jobs',
-            //applicationId
-            });
-    }
+  } catch (e) {
+    console.log(e);
+    res.status(500).send({ status: 500, data: e, message: "API Error" });
+  }
 };
 
-const jobsapplytest  = async(req, res) => {
+const jobsapply = async (req, res) => {
   //var applicationId = req.params.number;
   //const profileId = req.params.openingid;
   try {
-      res.render('candidatestest', {
+    res.render("candidates", {
       //title: 'Apply - Jobs',
       //applicationId
-      });
-  }
-  catch(e){
-      res.render('publicURL', {
-          //title: 'Openings - Jobs',
-          //applicationId
-          });
+    });
+  } catch (e) {
+    res.render("publicURL", {
+      //title: 'Openings - Jobs',
+      //applicationId
+    });
   }
 };
 
-const applicantRegistration = async(req, res) => {   // async makes a function return a Promise OR The word “async” before a function means one simple thing: a function always returns a promise.
+const jobsapplytest = async (req, res) => {
+  //var applicationId = req.params.number;
+  //const profileId = req.params.openingid;
   try {
-    let postData = req.body;   //This line means, whatever data is being sent in the post request(through body of candidates.ejs) is stored in postData.
-    //res.send({status: 200, data: postData, message: 'API Success Message'}); // sending a response
-   
-    const applicantData = await Applicants.create(postData); //Creating record. If any error comes here, it goes to line 36    ?????????????????????????????
-    console.log('DB operation: ', applicantData.toJSON()); //Printing record to console.
-    res.send({ status: 200, message: 'Applicant registered successfully' });  //Sending response.
+    res.render("candidatestest", {
+      //title: 'Apply - Jobs',
+      //applicationId
+    });
+  } catch (e) {
+    res.render("publicURL", {
+      //title: 'Openings - Jobs',
+      //applicationId
+    });
+  }
+};
 
-  } catch(e) {
+const applicantRegistration = async (req, res) => {
+  // async makes a function return a Promise OR The word “async” before a function means one simple thing: a function always returns a promise.
+  try {
+    let postData = req.body; //This line means, whatever data is being sent in the post request(through body of candidates.ejs) is stored in postData.
+    //res.send({status: 200, data: postData, message: 'API Success Message'}); // sending a response
+
+    const applicantData = await Applicants.create(postData); //Creating record. If any error comes here, it goes to line 36    ?????????????????????????????
+    console.log("DB operation: ", applicantData.toJSON()); //Printing record to console.
+    res.send({ status: 200, message: "Applicant registered successfully" }); //Sending response.
+  } catch (e) {
     //res.send({status: 500, data: e, message: 'API Error Message'}); // sending a response
     console.log(e.name);
-    if (e.name === 'SequelizeUniqueConstraintError') {
-      res.status(500).send({ status: 500, data: e.name, message: 'User with same Mobile or EmailID already exists' });
-    } else if (e.name === 'SequelizeValidationError') { //checks from Users.model.js if any validation error is there ex. if entered email's format is correct or not.
-      res.status(500).send({ status: 500, data: e.name, message: `Invalid ${e.errors[0].path}` });
+    if (e.name === "SequelizeUniqueConstraintError") {
+      res
+        .status(500)
+        .send({
+          status: 500,
+          data: e.name,
+          message: "User with same Mobile or EmailID already exists",
+        });
+    } else if (e.name === "SequelizeValidationError") {
+      //checks from Users.model.js if any validation error is there ex. if entered email's format is correct or not.
+      res
+        .status(500)
+        .send({
+          status: 500,
+          data: e.name,
+          message: `Invalid ${e.errors[0].path}`,
+        });
     } else {
-      res.status(500).send({ status: 500, data: e, message: 'API Error Message' });
+      res
+        .status(500)
+        .send({ status: 500, data: e, message: "API Error Message" });
     }
   }
 };
-
 
 // const addOpening = async(req, res) => {
 //   try {
@@ -142,7 +159,7 @@ const applicantRegistration = async(req, res) => {   // async makes a function r
 //   try {
 //     const data = await Openings.findAll({
 //       order: [['updatedAt', 'DESC']],
-//       attributes: ['id', 'openingName', 'location', 'department', 'updatedAt', 
+//       attributes: ['id', 'openingName', 'location', 'department', 'updatedAt',
 //       [Sequelize.literal(`CASE WHEN isActive = true THEN 'ACTIVE' ELSE 'INACTIVE' END`), 'status'],
 //     ]
 //     });
@@ -257,16 +274,16 @@ const applicantRegistration = async(req, res) => {   // async makes a function r
 // };
 
 module.exports = {
-    publicURLopeningDetails,
-    publicURLgetOpeningProfile,
-    jobsapply,
-    jobsapplytest,
-    applicantRegistration
-//   addOpening,
-//   getJobOpenings,
-//   jobs,
-//   updateJobOpeningStatus,
-//   jobdetails,
-//   getOpeningProfile,
-//   getOpeningProfileTimeline
-}
+  publicURLopeningDetails,
+  publicURLgetOpeningProfile,
+  jobsapply,
+  jobsapplytest,
+  applicantRegistration,
+  //   addOpening,
+  //   getJobOpenings,
+  //   jobs,
+  //   updateJobOpeningStatus,
+  //   jobdetails,
+  //   getOpeningProfile,
+  //   getOpeningProfileTimeline
+};
