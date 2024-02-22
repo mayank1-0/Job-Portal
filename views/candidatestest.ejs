@@ -1,0 +1,448 @@
+<div class="main-content" id="panel" width="100px">
+    
+  <!-- <div class="header bg-primary pb-8">
+    <div class="container-fluid">
+      <div class="header-body">
+        
+      </div>
+    </div>
+  </div>
+ <div class="container-fluid mt--6"> 
+  <!-- Main content -->
+  <!-- <div class="main-content"> -->
+    <!-- Header -->
+    <!-- <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
+      <div class="container"> --> 
+        <!-- <body class="bg-default"> -->
+    <!-- Main content -->
+    <!-- <div class="main-content"> -->
+      <!-- Header -->
+      <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
+        <div class="container">
+          <div class="header-body text-center mb-7">
+            <div class="row justify-content-center">
+              <div class="col-xl-5 col-lg-6 col-md-8 px-5">
+                <!-- <h1 class="text-white">Personal Details</h1> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="separator separator-bottom separator-skew zindex-100">
+          <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+            xmlns="http://www.w3.org/2000/svg">
+            <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
+          </svg>
+        </div>
+      
+      <!-- Page content -->
+      <div class="container mt--8 pb-5">
+        <!-- Table -->
+        
+            
+        
+        <div class="col-xl-12 order-xl-4">
+          <div class="card">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col-12">
+                  <!-- <div class="row justify-content-center">
+                    <div class="col-lg-6 col-md-8"> -->
+                      <div class="card bg-secondary border-0">
+                        <div class="card-body px-lg-5 py-lg-5">
+                          <div class="text-center text-muted mb-4">
+                            <h1><large>Applicants Details</large></h1>
+                          </div>
+                  
+                  <!-- <h1 class="mb-0">Applicant Profile -->
+                    <!-- <a href="#" class="text-warning">
+                      <small>( <i class="fa fa-paperclip"></i>  Attached CV</small>
+                    </a>
+                  </h3> -->
+                <!-- </div> -->
+                <!-- <div class="col-4 text-right">
+                  <div id="status"></div>
+                </div>
+              </div> -->
+              <!-- <div class="row align-items-center">
+                <div id="acceptRejectBtns" class="col-12 text-right">
+                  <a href="#" onclick="select()" class="btn btn-sm btn-success">
+                    <i class="fa fa-check"></i> Select
+                  </a>
+                  <a href="#" onclick="reject()" class="btn btn-sm btn-danger">
+                    <i class="fa fa-times"></i> Reject
+                  </a>
+                </div> -->
+              <!-- </div> -->
+            <!-- </div> -->
+            <!-- <div class="card-body">
+              <div id="hrComment" class="alert alert-default" role="alert">
+                <span class="alert-icon"><i class="fa fa-bullhorn"></i></span>
+                <span class="alert-text"><strong>HR Feedback!</strong> <span id="comment"></span></span>
+              </div> -->
+              <form>
+                <h6 class="heading-small text-muted mb-4">Applicant information</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-username">Name</label>
+                        <!-- <label id="name" class="form-control">{{NAME}}<label> -->
+                        
+                        <input class="form-control" placeholder="Name" type="text" id="name">
+                      
+                      </div>
+                    </div>
+                  </div>
+                  
+
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="form-control-label" for="Category">Category</label>
+                      </div>
+                    </div>
+                    <!-- <input class="form-control" placeholder="Fresher/Experience" type="Boolean" id="isFresher"> -->
+                    <select class="form-control" name="Category" id="isFresher">
+                             
+                      <option (click)="disableExp($event)" value="0">Fresher</option>
+                      <option (click)="disableExp($event)" value="1">Experience</option>
+                     
+          
+                    </select>
+                  </div>
+                  
+                            
+                          
+                          
+                          
+                          
+                        <!-- <label class="form-control-label" for="category">Category</label> -->
+                        <!-- <div class="dropdown">
+                          <button onclick="myFunction()" class="dropbtn">Category</button>
+                          <div id="isFresher" class="dropdown-content">
+                            <a href="#">NodeJs-Developer</a>
+                            <a href="#">QBA Tester</a>
+                            <a href="#">Others</a>
+                          </div> -->
+                         <!-- <input class="form-control" placeholder="Fresher/Experience" type="text" id="isFresher">  -->
+                        
+                        <!-- </div> -->
+                      <!-- </div> -->
+                    </div>
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="form-control-label" [disabled]={hide} for="experience">Experience</label>
+                        <!-- <label id="experience" class="form-control">{{EXPERIENCE}}<label> -->
+                          <input class="form-control" placeholder="Experience in years" type="number" id="experience">
+                      
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label class="form-control-label" for="noticePeriod">Notice Period</label>
+                        <!-- <label id="noticePeriod" class="form-control">{{NOTICE PERIOD}}<label> -->
+                          <input class="form-control" placeholder="Notice Period" type="text" id="noticePeriod">
+                      
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <!-- <label class="form-control-label" for="appliedFor">Applied For:</label>
+                         <select name="Job-Profile" id="appliedFor">
+                           <select name="QBA Tester" id="isFresher"> -->
+                          <!-- <option value="QBA Tester" selected="selected">QBA Tester</option>                            
+                          <option value="NodeJS Developer" selected="selected">NodeJS Developer</option>
+                          <option value="Others" selected="selected">Others</option> --> 
+
+
+                          <label class="form-control-label" for="appliedFor">Applied For:</label>
+                        </div>
+                    
+                              <select class="form-control" name="Applied For" id="appliedFor">
+                            
+                                <option value="QBA Tester">QBA Tester</option>
+                                <option value="NodeJS Develope">NodeJs-Developer</option>
+                                <option value="Others">Others</option>
+                               
+                    
+                              </select>
+                            
+                       
+                        
+                      </div>
+                    </div> 
+                     <div class="col-lg-6">
+                      <div class="form-group">
+                        
+                          <label class="form-control-label" for="Applied For Code:">Applied For Code:</label>
+                        </div>
+                    
+                              <select class="form-control" name="Applied For code" id="appliedForCode">
+                            
+                                <option value="2">QBA Tester</option>
+                                <option value="1">NodeJS Develope</option>
+                                <option value="3">Others</option>
+                               
+                    
+                              </select>
+                            
+                        
+                      
+                        <!-- <input class="form-control" placeholder="Applied For Code" type="number" id="appliedForCode"> -->
+                      
+                        <!-- <label id="appliedForCode" class="form-control">{{APPLIED ON}}<label> -->
+                      </div>
+                    </div>
+                     </div>
+                    </div> 
+                   <div class="pl-lg-4">
+                    <div class="form-group">
+                    <label class="form-control-label">Bio</label>
+                    <input class="form-control" textarea rows="4" id="applicantBio" 
+                      placeholder="A few words about you ..."></textarea>
+                      <!-- <input class="form-control" placeholder="Fresher/Experience" type="text" id="category"> -->
+                      
+                  </div>
+                </div>
+                <div class="pl-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label">Skills</label>
+                    <input class="form-control" textarea rows="4"  id="skills" 
+                      placeholder="My skills ..."></textarea>
+                      <!-- <input class="form-control" placeholder="Skills" type="text" id="skills"> -->
+                      
+                  </div>
+                </div>
+                <hr class="my-4" />
+                <!-- Address -->
+                <h6 class="heading-small text-muted mb-4">Contact informations</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="email">Email Id</label>
+                        <!-- <label id="email" class="form-control">{{EMAIL}}<label> -->
+                          <input class="form-control" placeholder="Email Id" type="email" id="email">
+                      
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="mobile">Mobile</label>
+                        <!-- <label id="mobile" class="form-control">{{MOBILE}}<label> -->
+                          <input class="form-control" placeholder="Mobile" type="number" id="mobile">
+                      
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="country">Country</label>
+                      </div>
+                      <!-- <input class="form-control" placeholder="Gender" type="text"> -->
+                      <select class="form-control" name="Country" id="country">
+                        <option value="">Select Country</option>
+                        <option value="Male">India</option>
+                        <option value="Female">London</option>
+                        <option value="Female">UK</option>
+                        <option value="Female">Lisbon</option>
+            
+                      </select>
+                    </div>
+                        <!-- <label id="country" class="form-control">{{COUNTRY}}</label> -->
+                        <!-- <input class="form-control" placeholder="Country" type="text" id="country"> -->
+                      
+                      
+                    </div>
+                  </div>
+                </div>
+                <hr class="my-4" />
+                <!-- Description -->
+                <h6 class="heading-small text-muted mb-4">Other informations</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="referrerEmployeeID">Referrer</label>
+                        <!-- <label id="referrerEmployeeID" class="form-control">{{REFERRER}}<label> -->
+                          <input class="form-control" placeholder="Referrer" type="id" id="referrerEmployeeID">
+                          <div class="text-center">
+                            <button type="button" class="btn btn-primary mt-4" onclick="apply()">Apply</button>
+                          </div>
+                          
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+                
+              </form>
+            </div>
+          <!-- </div>
+         </div>
+      </div>
+    </div>
+  </div>
+  </div> -->
+  <!-- Footer -->
+  <footer class="py-5" id="footer-main">
+    <div class="container">
+      <div class="row align-items-center justify-content-xl-between">
+        <div class="col-xl-6">
+          <div class="copyright text-center text-xl-left text-muted">
+            &copy; 2020 <a href="https://www.studiographene.com/" class="font-weight-bold ml-1" target="_blank">Studio
+              Graphene</a>
+          </div>
+        </div>
+        </div>
+    </div>
+  
+  </footer>
+
+
+
+  
+  
+  <script>
+    var hide=false;
+   function disableExp(e){
+     console.log("event value",e);
+     if (e=0){
+       hide=true;
+     }
+     else
+     hide= false;
+   }
+
+   function apply() {
+    console.log('Apply Btn Clicked');
+    var data = {
+      name: $("#name").val(),
+      email: $("#email").val(),
+      mobile: $("#mobile").val(),
+      isFresher: $("#isFresher").val(),
+      experience: $("#experience").val(),
+      noticePeriod: $("#noticePeriod").val(),
+      skills: $("#skills").val(),
+      applicantBio: $("#applicantBio").val(),
+      referrerEmployeeID: $("#referrerEmployeeID").val(),
+      appliedFor: $("#appliedFor").val(),
+      appliedForCode: $("#appliedForCode").val(),
+      country: $("#country").val(),
+      //  if(appliedFor == NodeJS Developer){
+      //         $("#appliedForCode").val("1");
+      //         $("#button").text("NodeJS Developer");
+      //       }
+      //       else{
+      //         $("#appliedForCode").val("2")"
+      //         $("#button").text("QBA Tester");
+
+      //       }
+      
+        
+    }
+    console.log(data);
+    $.ajax({
+      type: "POST",
+       url: "/applications/api/v1/add-applicant",
+      dataType: 'JSON',
+      data: data,
+      success: function success(success) {
+        console.log(success, success);
+        
+        
+
+        //  window.location.href = '/';
+        successNotification(success.responseJSON.message);
+      },
+
+      error: function error(error) {
+        console.log(error, 'error');
+        // $('.custom-container').noty({text: error.responseText.message});
+        errorNotification(error.responseJSON.message);
+      }
+    })
+  }
+  // function JobProfile() {
+  //         if ($("#appliedFor").text() == "NodeJS Developer") {
+  //           $("#appliedForCode").text("1");
+  //           // $("#button").text("ACTIVE");
+  //         }
+  //         else if ($("#appliedFor").text() == "QBA Tester") {
+  //           $("#appliedForCode").text("2");
+  //           // $("#button").text("INACTIVE");
+  //         }
+  //       }
+
+    // var token = '';
+    // var applicationId = ''
+    // $(() => {
+    //   token = window.localStorage.getItem('token');
+    //   // console.log(token);
+    //   // id = $("#applicationId").val() || '';
+    //   // console.log(applicationId);
+    //   apply();
+    //   //fetchCandidateTimeline();
+    // });
+    // function apply() {
+    //   $.ajax({
+    //     type: "GET",
+    //     url: "/applications/api/v1/add-applicant/"+applicationId,
+    //     beforeSend: function (xhr) {
+    //       xhr.setRequestHeader("Authorization", "Bearer " + token);
+    //     },
+        
+    //     success: function success(result) {
+    //       console.log(result);
+    //       result = result.data;
+    //       console.log('wiodhawjddj', result);
+    //      $("#name").val(result.name);
+    //      $("#isFresher").val(result.isFresher);
+    //      $("#experience").val(result.experience);
+    //      $("#mobile").val(result.mobile);
+    //      $("#email").val(result.email);
+    //      $("#noticePeriod").val(result.noticePeriod);
+    //      $("#skills").val(result.skills);
+    //      $("#bio").val(result.bio);
+    //      $("#referrerEmployeeID").val(result.referrerEmployeeID);
+    //      $("#appliedForCode").val(result.appliedForCode);
+    //      $("#appliedFor").val(result.appliedFor);
+    //      $("#country").val(result.country);
+        
+
+    //     },
+    //   error: function error(error) {
+    //       console.log(error, 'error');
+    //       // $('.custom-container').noty({text: error.responseText.message});
+    //       errorNotification(error.responseJSON.message);
+    //     }
+    //   })
+    // }
+  </script> 
+</body>
+   
+          
+        
+        
+
+  
+  
+
+
+
+
+
+
+  
+  
+
