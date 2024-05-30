@@ -19,12 +19,12 @@ const db = require("./db/models/index");
 var app = express(); //an instance of express is created 'app'
 
 app.use(
-  session({
-    resave: true,
-    saveUninitialized: true,
-    secret: "XCR3rsasa%RDHHH",
-    cookie: {},
-  })
+	session({
+		resave: true,
+		saveUninitialized: true,
+		secret: "XCR3rsasa%RDHHH",
+		cookie: {},
+	})
 );
 
 app.set("views", path.join(__dirname, "views")); //Here, 'views' is the application's views for which we provide the directory path. Here, 'app.set()' sets the property or
@@ -41,8 +41,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public"))); //any static files are found in public folder. _dirname should be joined to 'public'.
 
 app.use(function (req, res, next) {
-  res.set("Cache-Control", "private, no-cache, no-store, must-revalidate"); //means browser will not store data in cache(history) i.e when we press back or forward button in browser, it will not take us to previous page.
-  next();
+	res.set("Cache-Control", "private, no-cache, no-store, must-revalidate"); //means browser will not store data in cache(history) i.e when we press back or forward button in browser, it will not take us to previous page.
+	next();
 });
 
 app.use("/", indexRouter); //means whenever we write localhost:3000/ in browser, indexRouter is run
@@ -54,20 +54,20 @@ app.use("/join-us", publicURLRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  next(createError(404)); //whenever a route, etc fails an 404 error will be created and error.ejs will be rendered.
+	next(createError(404)); //whenever a route, etc fails an 404 error will be created and error.ejs will be rendered.
 });
 
-db.sequelize.sync({});
+db.sequelize.sync({force: true});
 
 // error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+	// set locals, only providing error in development
+	res.locals.message = err.message;
+	res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+	// render the error page
+	res.status(err.status || 500);
+	res.render("error");
 });
 
 module.exports = app; //make 'app' object available for imports in other files

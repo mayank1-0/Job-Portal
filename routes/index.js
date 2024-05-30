@@ -5,16 +5,16 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 
 /* GET home page. */
 router.get("/", isLoggedIn, function (req, res, next) {
-  //get() method has 2 parameters. First argument is the path of the route. Second argument is a function which is invoked and itself takes three arguments
-  res.render("index", { title: "Express" }); //will search index file in views folder and there provides value "Express" for the key 'title'. Also, we can either use res.render() or res.send().
+	//get() method has 2 parameters. First argument is the path of the route. Second argument is a function which is invoked and itself takes three arguments
+	res.render("index", { title: "Express" }); //will search index file in views folder and there provides value "Express" for the key 'title'. Also, we can either use res.render() or res.send().
 });
 
 router.get("/register", function (req, res, next) {
-  res.render("registration", { title: "Register" });
+	res.render("registration", { title: "Register" });
 });
 
 router.get("/reset-password", function (req, res, next) {
-  res.render("reset-password");
+	res.render("reset-password");
 });
 
 router.post("/user-registration", authentication.userRegistration); //if url has localhost:3000/user-registration then will invoke authentication.userRegistration() method

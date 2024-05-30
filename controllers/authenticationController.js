@@ -99,7 +99,7 @@ const userLogin = async (req, res) => {
       const match = await bcrypt.compare(
         req.body.password,
         userData.hashedPass
-      ); //here req.body.password that is coming from form is first encrypted and then it is compared with the hash/salt password stored in database(userData variable).
+      ); //here req.body.password that is coming from the form is first encrypted and then it is compared with the hash/salt password stored in database(userData variable).
       // console.log(match);
       if (!match) {
         res.status(401).send({ message: "Invalid Password. Please try again" }); //if dosen't match sends response.
