@@ -5,9 +5,10 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var expressLayouts = require("express-ejs-layouts"); //importing express-ejs-layouts.
 var session = require("express-session");
+var methodOverride = require('method-override');
 require("dotenv").config();
 
-var indexRouter = require("./routes/index"); //imports ./routes/index module here, in app.js
+var indexRouter = require("./routes/index"); //imports ./routes/index module here, in app.js ------ DONE!
 var usersRouter = require("./routes/users"); //imports ./routes/users module here, in app.js
 var dashboardRouter = require("./routes/dashboard"); //imports ./routes/users module here, in app.js
 var applicationRouter = require("./routes/applications");
@@ -17,6 +18,8 @@ var publicURLRouter = require("./routes/publicURL");
 const db = require("./db/models/index");
 
 var app = express(); //an instance of express is created 'app'
+
+app.use(methodOverride('_method'));
 
 app.use(
 	session({
@@ -45,8 +48,8 @@ app.use(function (req, res, next) {
 	next();
 });
 
-app.use("/", indexRouter); //means whenever we write localhost:3000/ in browser, indexRouter is run
-app.use("/users", usersRouter); //means whenever we write localhost:3000/users in browser, usersRouter is run
+app.use("/", indexRouter); //means whenever we write localhost:3000/ in browser, indexRouter is run ---- DONE!
+app.use("/users", usersRouter); //means whenever we write localhost:3000/users in browser, usersRouter is run -- DONE!
 app.use("/users", dashboardRouter); //means whenever we write localhost:3000/users/dashboard in browser, dashboardRouter is run
 app.use("/applications", applicationRouter);
 app.use("/openings", openingRoute);
@@ -57,7 +60,7 @@ app.use(function (req, res, next) {
 	next(createError(404)); //whenever a route, etc fails an 404 error will be created and error.ejs will be rendered.
 });
 
-db.sequelize.sync({force: true});
+db.sequelize.sync({});
 
 // error handler
 app.use(function (err, req, res, next) {

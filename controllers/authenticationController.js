@@ -2,16 +2,106 @@ const jwt = require("jsonwebtoken"); //imported and stored jwt module.
 const bcrypt = require("bcrypt");
 const randomstring = require("randomstring");
 const moment = require("moment");
+const randtoken = require("rand-token");
+const nodemailer = require("nodemailer");
 const config = require("../config.json"); // imported and stored config.json file.
 const db = require("../db/models");
 const User = db.Users; //???????????????????????????????????????????????
 const Op = db.Sequelize.Op; //??????????????????????????????????????????
+require("dotenv").config();
 
 // const demoUser = {                          //created an object demoUser containing
 //   _id: 22031995,                            // id,
 //   email: 'rajesh@studiographene.com',       // email,
 //   password: '1234567'                       // password.
 // };
+
+const sendPasswordResetLink = async (req, res) => {
+  try {
+    // Generating resetToken and saving it in Users table under resetPasswordToken
+    let email = req.body.email; // email where the reset password link is to be sent
+    const transporter = await nodemailer.createTransport({
+      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: "mayank.mehmi@gmail.com",
+        pass: "gxal pwha ncsv sswj",
+      },
+    });
+
+    let resetToken = await randtoken.generate(16);
+    const setResetPasswordToken = await User.update(
+      { resetPasswordToken: resetToken },
+      {
+        where: {
+          email
+        },
+        individualHooks: true,
+      }
+    );
+
+    // Sending the resetToken to the user's email whose password needs to be reset
+    const info = await transporter.sendMail({
+      from: "mayank.mehmi@gmail.com",
+      to: email,
+      subject: "Password reset link",
+      html: `<b>Enter a new password</b><br>
+      <form method="post" action="http://${process.env.HOST}:${process.env.PORT}/reset-password/${email}/${resetToken}?_method=PUT">
+      <label for="password">Enter new password</label><br>
+      <input name="password" type="password" required>
+      <input type="submit" value="Submit">
+      </form>`,
+    });
+    res.status(200).send({ status: 200, message: "Password reset link sent", data: resetToken });
+  } catch (error) {
+    res.status(500).send({ status: 500, message: "Something went wrong", error });
+  }
+}
+
+const resetPassword = async (req, res) => {
+  try {
+    let newPassword = req.body.password;
+    let email = req.params.email;
+    let emailResetPasswordToken = req.params.token;
+    let Users = db.Users;
+    let userData = await Users.findOne({
+      plain: true,
+      where: { email },
+      attributes: [["resetPasswordToken", "hashedToken"]]
+    });
+    if (!userData) {
+      res.status(401).send({ message: "User not found. Please try again" });
+    }
+    userData = userData.toJSON();
+    let dbResetPasswordToken = userData.hashedToken;
+
+    const match = await bcrypt.compare(
+      emailResetPasswordToken,
+      dbResetPasswordToken
+    );
+    if (!match) {
+      res.status(400).send({ message: "Invalid or expired link" });
+    }
+    else {
+      await Users.update({
+        password: newPassword,
+        resetPasswordToken: null
+      },
+        {
+          where: {
+            email
+          },
+          individualHooks: true
+        }
+      );
+    }
+    res.status(200).redirect('/');
+  } catch (error) {
+    res.status(500).send({ status: 500, success: false, message: "Something went wrong" });
+  }
+}
 
 const userRegistration = async (req, res) => {
   // async makes a function return a Promise OR The word “async” before a function means one simple thing: a function always returns a promise.
@@ -31,7 +121,6 @@ const userRegistration = async (req, res) => {
       postData.isAdmin = 1;
     }
     const userData = await User.create(postData); //Creating record. If any error comes here, it goes to line 36    ?????????????????????????????
-    console.log("DB operation: ", userData.toJSON()); //Printing record to console.
     res.send({
       status: 200,
       data: userData,
@@ -39,7 +128,6 @@ const userRegistration = async (req, res) => {
     }); //Sending response.
   } catch (e) {
     //res.send({status: 500, data: e, message: 'API Error Message'}); // sending a response
-    console.log(e.name);
     if (e.name === "SequelizeUniqueConstraintError") {
       res.status(500).send({
         status: 500,
@@ -64,7 +152,7 @@ const userRegistration = async (req, res) => {
 const userLogin = async (req, res) => {
   // async makes a function return a Promise.
   try {
-    // console.log(config.jwtSecret);            // printing jwtSecret from config.json to console.
+                // printing jwtSecret from config.json to console.
     // if(req.body.email !== demoUser.email) {   // checks if entered email and email in demoUser and their type aren't same.
     //   res.status(401).send({message: 'User not found'});  //send a response.
     // } else if(req.body.password !== demoUser.password) {  //checks if entered password and password in demoUser and their type aren't same.
@@ -74,7 +162,6 @@ const userLogin = async (req, res) => {
     //   res.status(200).send({token, message: 'Login Successfull'});  //send a response.
     // }
 
-    // console.log(req.body.email);
     let userData = await User.findOne({
       //findOne finds from database whether email inside database matches entered email(line 62 & 63). And also, await expression causes async function execution to pause until a Promise is settled (that is, fulfilled or rejected), and to resume execution of the async function after fulfillment. When resumed, the value of the await expression is that of the fulfilled Promise
       plain: true, //ignores any extra information returned by Sequelize ORM
@@ -93,18 +180,14 @@ const userLogin = async (req, res) => {
       //if email didn't matched thus no data goes in userData i.e empty/false
       res.status(401).send({ message: "User not found. Please try again" });
     } else {
-      userData = userData.toJSON(); //.toJSON returns only the data i.e attributes line 65
-      console.log(userData);
-      // console.log(req.body.password, userData.hashedPass)
+      userData = userData.toJSON(); //here .toJSON() converts userData object to JSON format.
       const match = await bcrypt.compare(
         req.body.password,
         userData.hashedPass
       ); //here req.body.password that is coming from the form is first encrypted and then it is compared with the hash/salt password stored in database(userData variable).
-      // console.log(match);
       if (!match) {
         res.status(401).send({ message: "Invalid Password. Please try again" }); //if dosen't match sends response.
       } else {
-        //console.log("awdawdawdawd" + req.session);
         const token = jwt.sign(
           {
             userId: userData.userID,
@@ -128,7 +211,6 @@ const userLogin = async (req, res) => {
       }
     }
   } catch (e) {
-    console.log(e);
     res
       .status(500)
       .send({ error: e, message: "Login failed. Please try again" }); //send a response.
@@ -139,10 +221,8 @@ const userLogout = async (req, res) => {
   try {
     let sessionData = req.session;
     const logout = await sessionData.destroy();
-    // console.log(logout);
     res.redirect("/");
   } catch (e) {
-    console.log(e);
     res
       .status(500)
       .send({ error: e, message: "Logout Failed. Please try again" });
@@ -150,6 +230,8 @@ const userLogout = async (req, res) => {
 };
 
 module.exports = {
+  sendPasswordResetLink,
+  resetPassword,
   userRegistration,
   userLogin,
   userLogout,

@@ -71,8 +71,8 @@
       <div class="row align-items-center justify-content-xl-between">
         <div class="col-xl-6">
           <div class="copyright text-center text-xl-left text-muted">
-            &copy; 2020 <a href="https://www.studiographene.com/" class="font-weight-bold ml-1" target="_blank">My
-              Company</a>
+            &copy; 2020 <a href="https://www.studiographene.com/" class="font-weight-bold ml-1" target="_blank">Studio
+              Graphene</a>
           </div>
         </div>
         <div class="col-xl-6">
@@ -98,7 +98,6 @@
 
 <script>
   function login() {
-    console.log('Login key pressed')
     var data = {
       email: $("#email").val(),
       password: $("#password").val(),
@@ -109,12 +108,10 @@
       dataType: 'JSON',
       data: data,
       success: function success(result) {   // result here is attributes data in userLogin() in authenticationController.js
-        //console.log(result);
         window.localStorage.setItem('token', result.token);
         window.location.href = '/users/dashboard';  //returns in url whatever is the account type i.e admin or user ??????????????????????????
       },
-      error: function error(error) {        //error ????????????????????????????
-        console.log(error);
+      error: function error(error) {
         // $('.custom-container').noty({text: error.responseText.message});
         errorNotification(error.responseJSON.message);        //errorNotification() comes from /public/javascripts/notyNotifications.js
       }

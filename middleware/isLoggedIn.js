@@ -1,4 +1,4 @@
-module.exports = (req, res, next) => {
+module.exports = (req, res, next) => {          //--------------------DONE!
   try {
     console.log("Session Data: ", req.session);
     if (req.session.user) {

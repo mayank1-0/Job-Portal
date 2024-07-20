@@ -55,43 +55,57 @@ module.exports = (sequelize, Sequelize) => {
     {
       hooks: {
         //any operation we do before a function
-        beforeCreate(user, options) {
-          //function called before creating a table.
-          // console.log(user.toJSON().password);
-          if (user.toJSON().password) {
-            return bcrypt
-              .hash(user.toJSON().password, 10) //converts password into hash or salt.
-              .then((hash) => {
-                // console.log(hash);
-                // user.toJSON().password = hash;
-                user.set("password", hash);
-              })
-              .catch((err) => {
-                console.log(err);
-                throw new Error();
-              });
+        async beforeCreate(user, options) {
+          try {
+            //function called before creating a table.
+            console.log('------------------ ', user.toJSON().password);
+            if (user.toJSON().password) {
+              const hash = await bcrypt.hash(user.toJSON().password, 10) //converts password into hash or salt.
+              // console.log(hash);
+              // user.toJSON().password = hash;
+              user.set("password", hash);
+            }
+            if (user.toJSON().resetPasswordToken) {
+              const hashToken = await bcrypt.hash(user.toJSON().resetPasswordToken, 10) //converts password into hash or salt.
+              // console.log(hash);
+              // user.toJSON().password = hash;
+              user.set("resetPasswordToken", hashToken);
+            }
+            return;
           }
+          catch (err) {
+            console.log(err);
+            throw new Error();
+          };
         },
-        beforeUpdate(user, options) {
+        async beforeUpdate(user, options) {
           //function called before updating a table.
           // console.log(user.toJSON().password);
-          if (user.toJSON().password) {
-            return bcrypt
-              .hash(user.toJSON().password, 10)
-              .then((hash) => {
-                // console.log(hash);
-                // user.toJSON().password = hash;
-                user.set("password", hash);
-              })
-              .catch((err) => {
-                console.log(err);
-                throw new Error();
-              });
+          console.log('}}}}}}}}}}}}}}}}}');
+          try {
+            //function called before creating a table.
+            if (user.toJSON().password) {
+              const hash = await bcrypt.hash(user.toJSON().password, 10) //converts password into hash or salt.
+              // console.log(hash);
+              // user.toJSON().password = hash;
+              user.set("password", hash);
+            }
+            if (user.toJSON().resetPasswordToken) {
+              const hashToken = await bcrypt.hash(user.toJSON().resetPasswordToken, 10) //converts password into hash or salt.
+              // console.log(hash);
+              // user.toJSON().password = hash;
+              user.set("resetPasswordToken", hashToken);
+            }
+            return;
           }
+          catch (err) {
+            console.log(err);
+            throw new Error();
+          };
         },
       },
-    }
-  );
+    },
+  )
 
   return UserModel;
 };

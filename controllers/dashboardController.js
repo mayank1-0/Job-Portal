@@ -2,13 +2,10 @@ const cases = require("change-case");
 const getDashboard = async (req, res) => {
   try {
     //const userType = req.param('userType'); //userType variable will take userType from param 'userType' inside url in index.ejs line 220.
-    console.log("111111Session Data mmmmmmmmmm", req.session);
     req.session.path = "Dashboard";
     req.session.subpath = cases.sentenceCase(req.session.user.userType); //Here, cases.sentenceCase() capitalize the first character that comes through the argument.
     const sessionData = req.session; //userData through session.
-    console.log("222222awdawdawdawd", sessionData);
     const userType = cases.noCase(req.session.user.userType); //noCase() is used if userType comes as'Admin', noCase() will convert it to 'admin'.
-    console.log("333333", userType);
     if (userType === "admin") {
       //
       res.render("dashboard/adminDashboard", {

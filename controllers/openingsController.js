@@ -9,7 +9,6 @@ const path = "Openings";
 const addOpening = async (req, res) => {
   try {
     const data = req.body;
-    console.log(data);
     await Openings.create(data);
     res
       .status(200)
