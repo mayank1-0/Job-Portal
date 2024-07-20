@@ -2,11 +2,11 @@ const dbConfig = require("../../config/db.config");
 const Sequelize = require("sequelize"); //Sequelize is the framework/module. It is an ORM(Object-Relational-Mapping)
 
 const sequelize = new Sequelize(
-  process.env.DB_DBNAME_TEST,
-  process.env.DB_USERNAME_TEST,
-  process.env.DB_PASSWORD_TEST,
+  process.env.DB_DBNAME,
+  process.env.DB_USERNAME,
+  process.env.DB_PASSWORD,
   {
-    host: process.env.DB_HOST_TEST,
+    host: process.env.DB_HOST,
     dialect: dbConfig.dialect,
     // logging: false  //To log all the running queries
   }
