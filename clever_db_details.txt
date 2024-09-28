@@ -1,0 +1,4 @@
+DB_DBNAME=bxzbrji5myaey5f5ugsb
+DB_HOST=bxzbrji5myaey5f5ugsb-mysql.services.clever-cloud.com
+DB_PASSWORD=uu5WK62pklrqwFk0xuCq
+DB_USERNAME=uu6pwsajacwhqiqe
