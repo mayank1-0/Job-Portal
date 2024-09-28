@@ -26,8 +26,8 @@ const sendPasswordResetLink = async (req, res) => {
       port: 587,
       secure: false,
       auth: {
-        user: "mayank.mehmi@gmail.com",
-        pass: "gxal pwha ncsv sswj",
+        user: "",
+        pass: "",
       },
     });
 
