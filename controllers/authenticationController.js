@@ -12,7 +12,7 @@ require("dotenv").config();
 
 // const demoUser = {                          //created an object demoUser containing
 //   _id: 22031995,                            // id,
-//   email: 'rajesh@studiographene.com',       // email,
+//   email: 'rajesh@abc.com',       // email,
 //   password: '1234567'                       // password.
 // };
 
