@@ -60,7 +60,7 @@ app.use(function (req, res, next) {
 	next(createError(404)); //whenever a route, etc fails an 404 error will be created and error.ejs will be rendered.
 });
 
-db.sequelize.sync({force: true});
+db.sequelize.sync({});
 
 // error handler
 app.use(function (err, req, res, next) {
