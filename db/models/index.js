@@ -17,6 +17,15 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+// Foreign key vala table pehle aata hai
+
+// Student_Registration.hasMany(Exam, {
+//   foreignKey: "registration_number",
+// });
+// Exam.belongsTo(Student_Registration, {
+//   foreignKey: "registration_number",
+// });
+
 db.Users = require("../models/Users.model")(sequelize, Sequelize);
 db.Applicants = require("../models/Applicants.model")(sequelize, Sequelize);
 db.Timeline = require("../models/Timeline.model")(sequelize, Sequelize);
