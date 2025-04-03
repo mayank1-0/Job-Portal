@@ -184,9 +184,7 @@
       var applicationId = ''
       $(() => {
         token = window.localStorage.getItem('token');
-        // console.log(token);
         applicationId = $("#applicationId").val() || '';
-        // console.log(applicationId);
         fetchCandidateProfile();
         fetchCandidateTimeline();
       });
@@ -198,9 +196,7 @@
             xhr.setRequestHeader("Authorization", "Bearer " + token);
           },
           success: function success(result) {
-            console.log(result);
             result = result.data;
-            console.log('wiodhawjddj',result );
             $("#name").text(result.name);
             $("#email").text(result.email);
             $("#mobile").text(result.mobile);
@@ -236,8 +232,6 @@
             }
           },
           error: function error(error) {
-            console.log(error, 'error');
-            // $('.custom-container').noty({text: error.responseText.message});
             errorNotification(error.responseJSON.message);
           }
         })
@@ -252,7 +246,6 @@
             xhr.setRequestHeader("Authorization", "Bearer " + token);
           },
           success: function success(result) {
-            console.log(result);
             if (typeof result.data !== Object) {
               result = result.data;
               var cards = '';
@@ -278,8 +271,6 @@
             }
           },
           error: function error(error) {
-            console.log(error, 'error');
-            // $('.custom-container').noty({text: error.responseText.message});
             errorNotification(error.responseJSON.message);
           }
         })
@@ -294,7 +285,6 @@
       }
 
       function select() {
-        // alert(applicationId);
         var data = {
           statusCode: 4,
           status: 'Selected'

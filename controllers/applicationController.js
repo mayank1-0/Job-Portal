@@ -3,7 +3,6 @@ const moment = require("moment");
 const db = require("../db/models");
 const Applicants = db.Applicants;
 const Timeline = db.Timeline;
-const sequelize = require("sequelize");
 const { Sequelize } = require("sequelize");
 
 const path = "Applications";
@@ -12,14 +11,12 @@ const applicants = async (req, res) => {
   req.session.path = path;
   req.session.subpath = cases.sentenceCase("applicants");
   const sessionData = req.session;
-  console.log(sessionData);
   try {
     res.render("applications/applicants", {
       title: "Application - Applicants",
       sessionData: sessionData,
     });
   } catch (e) {
-    console.log(e);
     res.render("applications/applicants", {
       title: "Application - Applicants",
       sessionData: sessionData,
@@ -63,8 +60,6 @@ const getApplicantProfile = async (req, res) => {
     applicantData.appliedOn = moment(applicantData.createdAt).format(
       "DD/MM/YYYY hh:mm:ss A"
     );
-    console.log(applicantData);
-    // console.log(applicantData.isFresher === false ? 'Experienced' : 'Fresher');
     res
       .status(200)
       .send({
@@ -73,32 +68,9 @@ const getApplicantProfile = async (req, res) => {
         message: "Applicant Data Fetched",
       });
   } catch (e) {
-    console.log(e);
     res.status(500).send({ status: 500, data: e, message: "API Error" });
   }
 };
-
-// const getApplicantProfile1 = async(req, res) => {
-//   try {
-//     const openingname = req.params.opening;
-//     let openingData = await Applicants.findAll({
-//       plain: true, //ignores any extra information returned by Sequelize ORM
-//       where: {
-//         appliedFor: openingname,
-//       }
-//     });
-//     openingData = openingData.toJSON();
-//     openingData.category = (openingData.isFresher === false ? 'Experienced' : 'Fresher');
-//     openingData.experience = Math.floor(openingData.experience/12) || 0;
-//     openingData.appliedOn = moment(openingData.createdAt).format('DD/MM/YYYY hh:mm:ss A');
-//     console.log(openingData);
-//     // console.log(applicantData.isFresher === false ? 'Experienced' : 'Fresher');
-//     res.status(200).send({status: 200, data: openingData, message: 'Opening Data Fetched'});
-//   } catch(e) {
-//     console.log(e);
-//     res.status(500).send({status: 500, data: e, message: 'API Error'});
-//   }
-// };
 
 const getTimeline = async (req, res) => {
   try {
@@ -110,8 +82,6 @@ const getTimeline = async (req, res) => {
       },
     });
     if (applicantData) {
-      // applicantData = applicantData.toJSON();
-      // console.log(applicantData);
       res
         .status(200)
         .send({
@@ -129,7 +99,6 @@ const getTimeline = async (req, res) => {
         });
     }
   } catch (e) {
-    console.log(e);
     res.status(500).send({ status: 500, data: e, message: "API Error" });
   }
 };
@@ -157,7 +126,6 @@ const addTimeline = async (req, res) => {
       );
     }
     postData.round = `Round ${parseInt(roundCounter, 10) + 1}`;
-    // console.log(postData);
     const timelineData = await Timeline.create(postData);
     res
       .status(200)
@@ -167,7 +135,6 @@ const addTimeline = async (req, res) => {
         message: "Timeline created successfully",
       });
   } catch (e) {
-    console.log(e);
     res.status(500).send({ status: 500, data: e, message: "API Error" });
   }
 };
@@ -176,7 +143,6 @@ const updateApplicationStatus = async (req, res) => {
   try {
     let postData = req.body;
     postData.applicantID = req.params.applicationid;
-    console.log(postData);
     await Applicants.update(
       {
         statusCode: postData.statusCode,
@@ -196,7 +162,6 @@ const updateApplicationStatus = async (req, res) => {
         message: `Application ${postData.status} successfully`,
       });
   } catch (e) {
-    console.log(e);
     res.status(500).send({ status: 500, data: e, message: "API Error" });
   }
 };
@@ -204,13 +169,11 @@ const updateApplicationStatus = async (req, res) => {
 const addApplicant = async (req, res) => {
   try {
     let postData = req.body;
-    console.log(postData);
     const data = await Applicants.create(postData);
     res
       .status(200)
       .send({ status: 200, message: `Application submitted successfully` });
   } catch (e) {
-    console.log(e.name);
     if (e.name === "SequelizeUniqueConstraintError") {
       res
         .status(500)
@@ -264,7 +227,6 @@ const getApplicants = async (req, res) => {
         ["createdAt", "appliedOn"],
       ],
     });
-    console.log("awdawdawdawdggggggggggggggggggggggggggggggg" + data);
     res
       .status(200)
       .send({
@@ -273,7 +235,6 @@ const getApplicants = async (req, res) => {
         message: `Applications fetched successfully`,
       });
   } catch (e) {
-    console.log(e);
     res
       .status(500)
       .send({ status: 500, data: e, message: "API Error Message" });

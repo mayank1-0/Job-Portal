@@ -121,7 +121,6 @@
   var token = '';
   $(() => {
     token = window.localStorage.getItem('token');
-    // console.log(token);
     fetchApplicants();
   });
   function fetchApplicants() {
@@ -132,7 +131,6 @@
         xhr.setRequestHeader("Authorization", "Bearer " + token);
       },
       success: function success(result) {
-        console.log(result);
         result = result.data;
         var tr = '';
         result.map((i) => {
@@ -150,15 +148,12 @@
         $("#tr").html(tr);    //.html() is like .innerHTML  
       },
       error: function error(error) {
-        console.log(error, 'error');
-        // $('.custom-container').noty({text: error.responseText.message});
         errorNotification(error.responseJSON.message);
       }
     })
   }
 
   function reject(applicationId) {
-    //alert(applicationId);
     var data = {
       statusCode: 5,
       status: 'Rejected'
@@ -167,7 +162,6 @@
   }
 
   function select(applicationId) {
-    //alert(applicationId);
     var data = {
       statusCode: 4,
       status: 'Selected'

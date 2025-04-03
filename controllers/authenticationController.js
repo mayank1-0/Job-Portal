@@ -197,7 +197,7 @@ const userLogin = async (req, res) => {
           config.jwtSecret,
           { expiresIn: "24h" }
         ); //if matches then creates a jwt token.
-        let sessionData = req.session; // from where does req.session takes data ????????????????????
+        let sessionData = req.session; // req.session gets stored into express-session which exists on the server side
         sessionData.user = {};
         sessionData.token = token;
         sessionData.user.name = userData.name;

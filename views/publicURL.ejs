@@ -24,31 +24,11 @@
                   <div class="row align-items-center">
                     <div class="col-8">
                       <h3 class="mb-0">Job Description
-                        <!-- <a href="#" class="text-warning">
-                          <small>( <i class="fa fa-paperclip"></i> View Attached CV)</small>
-                        </a> -->
                       </h3>
                     </div>
-                    <!-- <div class="col-4 text-right">
-                      <div id="status"></div>
-                    </div> -->
                   </div>
-                  <!-- <div class="row align-items-center">
-                    <div id="acceptRejectBtns" class="col-12 text-right">
-                      <a href="#" onclick="select()" class="btn btn-sm btn-success">
-                        <i class="fa fa-check"></i> Select
-                      </a>
-                      <a href="#" onclick="reject()" class="btn btn-sm btn-danger">
-                        <i class="fa fa-times"></i> Reject
-                      </a>
-                    </div>
-                  </div> -->
                 </div>
                 <div class="card-body">
-                  <!-- <div id="hrComment" class="alert alert-default" role="alert">
-                    <span class="alert-icon"><i class="fa fa-bullhorn"></i></span>
-                    <span class="alert-text"><strong>HR Feedback!</strong> <span id="comment"></span></span>
-                  </div> -->
                   <form>
                     <h6 class="heading-small text-muted mb-4">JOB INFORMATION</h6>
                     <div class="pl-lg-4">
@@ -111,54 +91,6 @@
                         </div>
                       </div>
                     </div>
-                    
-                    <!-- <div class="pl-lg-4">
-                      <div class="form-group">
-                        <label class="form-control-label">Skills</label>
-                        <textarea rows="4" class="form-control" id="skills" readonly
-                          placeholder="My skills ..."></textarea>
-                      </div>
-                    </div>
-                    <hr class="my-4" />
-                     Address 
-                    <h6 class="heading-small text-muted mb-4">Contact informations</h6>
-                    <div class="pl-lg-4">
-                      <div class="row">
-                        <div class="col-lg-6">
-                          <div class="form-group">
-                            <label class="form-control-label" for="email">Email Id</label>
-                            <label id="email" class="form-control">{{EMAIL}}<label>
-                          </div>
-                        </div>
-                        <div class="col-lg-6">
-                          <div class="form-group">
-                            <label class="form-control-label" for="mobile">Mobile</label>
-                            <label id="mobile" class="form-control">{{MOBILE}}<label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-lg-6">
-                          <div class="form-group">
-                            <label class="form-control-label" for="country">Country</label>
-                            <label id="country" class="form-control">{{COUNTRY}}</label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <hr class="my-4" />
-                     Description 
-                    <h6 class="heading-small text-muted mb-4">Other informations</h6>
-                    <div class="pl-lg-4">
-                      <div class="row">
-                        <div class="col-lg-6">
-                          <div class="form-group">
-                            <label class="form-control-label" for="referrerEmployeeID">Referrer</label>
-                            <label id="referrerEmployeeID" class="form-control">{{REFERRER}}<label>
-                          </div>
-                        </div>
-                      </div>
-                    </div> -->
                   </form>
                 </div>
               </div>
@@ -173,11 +105,8 @@
         var id = ''
         $(() => {
           token = window.localStorage.getItem('token');
-          // console.log(token);
           id = $("#profileid").val() || '';
-          // console.log(applicationId);
           fetchCandidateProfile();
-          //fetchCandidateTimeline();
         });
         function fetchCandidateProfile() {
           $.ajax({
@@ -187,140 +116,23 @@
               xhr.setRequestHeader("Authorization", "Bearer " + token);
             },
             success: function success(result) {
-              console.log(result);
               result = result.data;
-              console.log('wiodhawjddj', result);
               $("#openingname").text(result.openingName);
-              //$("#email").text(result.email);
-              //$("#mobile").text(result.mobile);
               $("#responsibilities").text(result.responsibilities);
               $("#location").text(result.location);
               if (result.isActive == 1) {
                 $("#status").text("ACTIVE");
-                //$("#button").text("INACTIVE");
               }
               else {
                 $("#status").text("INACTIVE");
-                //$("#button").text("ACTIVE");
               }
-              // $("#status").text(result.isActive);
               $("#department").text(result.department);
               $("#jobdescription").text(result.description);
-              //var appliedSince = moment(result.appliedOn, 'DD/MM/YYYY hh:mm:ss A').fromNow();
-              //$("#appliedOn").text(moment(result.appliedOn).format('DD/MM/YYYY') + ' (' + appliedSince + ')');
-              //$("#country").text(result.country);
               $("#skillsRequired").text(result.skillsRequired);
-  
-              // let status = '';
-              // if (i.status == "ACTIVE") {
-              //   status = '<button class="btn btn-success btn-sm" onclick="activeInactive(0, \''+i.id+'\')">' + i.status + '</button>';
-              // } else if (i.status == "INACTIVE") {
-              //   status = '<button class="btn btn-danger btn-sm" onclick="activeInactive(1, \''+i.id+'\')">' + i.status + '</button>';
-              // }
-  
-              //$("#referrerEmployeeID").text(result.referrerEmployeeID);
-              //$("#category").text(result.category);
-              //   if (result.comment === '' || result.comment === null) {
-              //    $("#hrComment").hide();
-              //  } else {
-              //    $("#hrComment").show();
-              //    $("#comment").text(result.comment);
-              //  }
-              // if (result.statusCode == 0) {
-              //   $("#status").html('<label class="text-info"><i class="fa fa-circle"></i> ' + result.status + '</label>');
-              // } else if (result.statusCode == 1 || result.statusCode == 2 || result.statusCode == 3) {
-              //   $("#status").html('<label class="text-warning"><i class="fa fa-circle"></i> ' + result.status + '</label>');
-              // } else if (result.statusCode == 4) {
-              //   $("#status").html('<label class="text-success"><i class="fa fa-circle"></i> ' + result.status + '</label>');
-              //   // $("#acceptRejectBtns").hide();
-              //   // $("#scheduleInterviewBtn").hide();
-              // } else if (result.statusCode == 5) {
-              //   $("#status").html('<label class="text-danger"><i class="fa fa-circle"></i> ' + result.status + '</label>');
-              //   // $("#acceptRejectBtns").hide();
-              //   // $("#scheduleInterviewBtn").hide();
-              // }
             },
             error: function error(error) {
-              console.log(error, 'error');
-              // $('.custom-container').noty({text: error.responseText.message});
               errorNotification(error.responseJSON.message);
             }
           })
         }
-  
-        // function fetchCandidateTimeline() {
-        //   $("#timelineCards").html('');
-        //   $.ajax({
-        //     type: "GET",
-        //     url: "/openings/api/v1/openingstimeline/" + id,
-        //     beforeSend: function (xhr) {
-        //       xhr.setRequestHeader("Authorization", "Bearer " + token);
-        //     },
-        //     success: function success(result) {
-  
-        //       //if (typeof result.data !== Object) {
-        //       result = result.data;
-        //       console.log('3213123' + result);
-        //       var cards='';
-        //       var timeline = '';
-        //       //Object.keys(result).map((i) => {
-        //       result.map((i) => {
-        //         //    orignaltimeline += '<p class="text-center">' + i.name + '</p>'
-        //         timeline += '<div class="card-body"><div class="row"><div class="col"><h5 class="card-title text-uppercase text-muted mb-0">' + '</h5> <span class="h2 font-weight-bold mb-0"><a href="/applications/applicants/profile/' + i.applicantID +'">' + i.name + '</a></span></div></div><p class="mt-3 mb-0 text-sm"> ' + i.status + ' <span class="text-nowrap">' + ' <small>' +  '</small></span></p></div>';
-        //         //    let status = '';
-                //   let detailsBtn = '';
-                //   let scores = '';
-                //     if (i.statusCode == 0) {
-                //       status = '<span class="text-primary mr-2">' + i.status + '.</span>'
-                //     } else if (i.statusCode == 1) {
-                //       status = '<span class="text-success mr-2">' + i.status + '.</span>';
-                //       scores = '<div class="row"><div class="col"><div class="card-profile-stats d-flex justify-content-center"><div> <span class="heading">' + i.logicalAbility + '</span> <span class="description">Logical</span></div><div> <span class="heading">' + i.communication + '</span> <span class="description">Comm.</span></div><div> <span class="heading">' + i.attitude + '</span> <span class="description">Attitude</span></div></div></div></div><div class="row"><div class="col"><p>' + i.feedback + '</p></div></div>';
-                //     } else if (i.statusCode == 2) {
-                //       status = '<span class="text-danger mr-2">' + i.status + '.</span>';
-                //       scores = '<div class="row"><div class="col"><div class="card-profile-stats d-flex justify-content-center"><div> <span class="heading">' + i.logicalAbility + '</span> <span class="description">Logical</span></div><div> <span class="heading">' + i.communication + '</span> <span class="description">Comm.</span></div><div> <span class="heading">' + i.attitude + '</span> <span class="description">Attitude</span></div></div></div></div><div class="row"><div class="col"><p>' + i.feedback + '</p></div></div>';
-                //     }
-                //     cards += '<div class="card-body"><div class="row"><div class="col"><h5 class="card-title text-uppercase text-muted mb-0">' + i.round + '</h5> <span class="h2 font-weight-bold mb-0">' + i.interviewerName + '</span></div>' + detailsBtn + '</div>' + scores + '<p class="mt-3 mb-0 text-sm"> ' + status + ' <span class="text-nowrap">' + i.date + ' <small> (Slot: ' + i.scheduledSlot + ') </small></span></p></div>';
-                //     scores = '<div class="row"><div class="col"><div class="card-profile-stats d-flex justify-content-center"><div> <span class="heading">' + i.logicalAbility + '</span> <span class="description">Logical</span></div><div> <span class="heading">' + i.communication + '</span> <span class="description">Comm.</span></div><div> <span class="heading">' + i.attitude + '</span> <span class="description">Attitude</span></div></div></div></div>'
-        //       });
-        //       $("#timelineCards").html(timeline);
-        //       //}
-        //       //else {
-        //       //$("#timelineCards").html('<div class="card-body"><p class="text-center">' + result.data + '</p></div>');
-        //       //}
-        //     },
-        //     error: function error(error) {
-        //       console.log(error, 'error');
-        //       // $('.custom-container').noty({text: error.responseText.message});
-        //       errorNotification(error.responseJSON.message);
-        //     }
-        //   })
-        // }
-  
-        // function reject() {
-        //   var data = {
-        //     statusCode: 5,
-        //     status: 'Rejected'
-        //   };
-        //   confirmAlertWithReason('/applications/api/v1/confirm-reject-candidate/' + applicationId, token, data);
-        // }
-  
-        // function select() {
-        //   // alert(applicationId);
-        //   var data = {
-        //     statusCode: 4,
-        //     status: 'Selected'
-        //   };
-        //   confirmAlertWithReason('/applications/api/v1/confirm-reject-candidate/' + applicationId, token, data);
-        // }
-        // function activeInactive() {
-        //   // alert(openingId);
-        //   if ($("#status").text() == "ACTIVE") {                       //Hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-        //     $("#status").text("INACTIVE");
-        //     $("#button").text("ACTIVE");
-        //   }
-        //   else if ($("#status").text() == "INACTIVE") {
-        //     $("#status").text("ACTIVE");
-        //     $("#button").text("INACTIVE");
-        //   }
-        // }
       </script>

@@ -68,9 +68,8 @@
 
   <script>
     var token = '';
-    $(() => {   //document.getElementById(()=>token = window.localStorage.getItem('token'); console.log(token); fetchJobOpenings();)
+    $(() => {
       token = window.localStorage.getItem('token');
-      // console.log(token);
       fetchJobOpenings();
     });
     function fetchJobOpenings() {
@@ -81,7 +80,6 @@
           xhr.setRequestHeader("Authorization", "Bearer " + token);
         },
         success: function success(result) {
-          console.log(result);
           result = result.data;
           var tr = '';
           result.map((i) => {
@@ -97,15 +95,12 @@
           $("#tr").html(tr);
         },
         error: function error(error) {
-          console.log(error, 'error');
-          // $('.custom-container').noty({text: error.responseText.message});
           errorNotification(error.responseJSON.message);
         }
       })
     }
 
     function activeInactive(status, openingId) {
-      // alert(openingId);
       var data = {
         status: status
       };

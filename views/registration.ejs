@@ -67,7 +67,6 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-genderless"></i></span>
                     </div>
-                    <!-- <input class="form-control" placeholder="Gender" type="text"> -->
                     <select class="form-control" name="Gender" id="gender">
                       <option value="">Select Gender</option>
                       <option value="Male">Male</option>
@@ -83,17 +82,6 @@
                     <input class="form-control" placeholder="Password" type="password" id="password">
                   </div>
                 </div>
-                <!-- <div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div> -->
-                <!-- <div class="row my-4">
-                    <div class="col-12">
-                      <div class="custom-control custom-control-alternative custom-checkbox">
-                        <input class="custom-control-input" id="customCheckRegister" type="checkbox">
-                        <label class="custom-control-label" for="customCheckRegister">
-                          <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
-                        </label>
-                      </div>
-                    </div>
-                  </div> -->
                 <div class="text-center">
                   <button type="button" class="btn btn-primary mt-4" onclick="registerUser()">Create account</button>
                 </div>
@@ -142,7 +130,6 @@
   </footer>
   <script>
     function registerUser() {
-      console.log('Register Btn Clicked');
       var data = {
         name: $("#name").val(),
         age: $("#age").val(),
@@ -151,16 +138,13 @@
         email: $("#email").val(),
         password: $("#password").val(),
       }
-      console.log(data);
       $.ajax({                                         //here ajax is used to call registration API
         type: "POST",
         url: "/user-registration",                     //loads and executes the javaScript file associated with this route.
         dataType: 'JSON', //if "GET" then we can ommit this line
         data: data,       //and also this line.
         success: function success(result) {             //whatever userRegistration() in authenticationController.js sends as response will be stored in result argument.
-          console.log(result);
           window.localStorage.setItem('token', result.token);
-          //window.location.href = '/users/dashboard?userType=' + result.userType;
           successNotification(result.message);        //successNotification() comes from /public/javascripts/notyNotifications.js and message comes from userRegistration() in authenticationController.js if whatever sent is not an error.
           setTimeout(() => { window.location.href = '/' }, 3000);
 
@@ -168,8 +152,6 @@
 
         },
         error: function error(error) {            //whatever userRegistration() in authenticationController.js sends as response will be stored in error argument if whatever sent is an error.
-          console.log(error, 'error');
-          // $('.custom-container').noty({text: error.responseText.message});
           errorNotification(error.responseJSON.message);  //errorNotification() comes from /public/javascripts/notyNotifications.js
         }
       })

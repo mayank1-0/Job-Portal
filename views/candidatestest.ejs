@@ -288,12 +288,6 @@
                 
               </form>
             </div>
-          <!-- </div>
-         </div>
-      </div>
-    </div>
-  </div>
-  </div> -->
   <!-- Footer -->
   <footer class="py-5" id="footer-main">
     <div class="container">
@@ -315,7 +309,6 @@
   <script>
     var hide=false;
    function disableExp(e){
-     console.log("event value",e);
      if (e=0){
        hide=true;
      }
@@ -324,7 +317,6 @@
    }
 
    function apply() {
-    console.log('Apply Btn Clicked');
     var data = {
       name: $("#name").val(),
       email: $("#email").val(),
@@ -337,96 +329,23 @@
       referrerEmployeeID: $("#referrerEmployeeID").val(),
       appliedFor: $("#appliedFor").val(),
       appliedForCode: $("#appliedForCode").val(),
-      country: $("#country").val(),
-      //  if(appliedFor == NodeJS Developer){
-      //         $("#appliedForCode").val("1");
-      //         $("#button").text("NodeJS Developer");
-      //       }
-      //       else{
-      //         $("#appliedForCode").val("2")"
-      //         $("#button").text("QBA Tester");
-
-      //       }
-      
-        
+      country: $("#country").val(), 
     }
-    console.log(data);
     $.ajax({
       type: "POST",
        url: "/applications/api/v1/add-applicant",
       dataType: 'JSON',
       data: data,
       success: function success(success) {
-        console.log(success, success);
-        
-        
-
         //  window.location.href = '/';
         successNotification(success.responseJSON.message);
       },
 
       error: function error(error) {
-        console.log(error, 'error');
-        // $('.custom-container').noty({text: error.responseText.message});
         errorNotification(error.responseJSON.message);
       }
     })
   }
-  // function JobProfile() {
-  //         if ($("#appliedFor").text() == "NodeJS Developer") {
-  //           $("#appliedForCode").text("1");
-  //           // $("#button").text("ACTIVE");
-  //         }
-  //         else if ($("#appliedFor").text() == "QBA Tester") {
-  //           $("#appliedForCode").text("2");
-  //           // $("#button").text("INACTIVE");
-  //         }
-  //       }
-
-    // var token = '';
-    // var applicationId = ''
-    // $(() => {
-    //   token = window.localStorage.getItem('token');
-    //   // console.log(token);
-    //   // id = $("#applicationId").val() || '';
-    //   // console.log(applicationId);
-    //   apply();
-    //   //fetchCandidateTimeline();
-    // });
-    // function apply() {
-    //   $.ajax({
-    //     type: "GET",
-    //     url: "/applications/api/v1/add-applicant/"+applicationId,
-    //     beforeSend: function (xhr) {
-    //       xhr.setRequestHeader("Authorization", "Bearer " + token);
-    //     },
-        
-    //     success: function success(result) {
-    //       console.log(result);
-    //       result = result.data;
-    //       console.log('wiodhawjddj', result);
-    //      $("#name").val(result.name);
-    //      $("#isFresher").val(result.isFresher);
-    //      $("#experience").val(result.experience);
-    //      $("#mobile").val(result.mobile);
-    //      $("#email").val(result.email);
-    //      $("#noticePeriod").val(result.noticePeriod);
-    //      $("#skills").val(result.skills);
-    //      $("#bio").val(result.bio);
-    //      $("#referrerEmployeeID").val(result.referrerEmployeeID);
-    //      $("#appliedForCode").val(result.appliedForCode);
-    //      $("#appliedFor").val(result.appliedFor);
-    //      $("#country").val(result.country);
-        
-
-    //     },
-    //   error: function error(error) {
-    //       console.log(error, 'error');
-    //       // $('.custom-container').noty({text: error.responseText.message});
-    //       errorNotification(error.responseJSON.message);
-    //     }
-    //   })
-    // }
   </script> 
 </body>
    
